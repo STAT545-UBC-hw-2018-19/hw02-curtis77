@@ -17,7 +17,7 @@ library(gapminder)
 library(tidyverse)
 ```
 
-## Exploration of Data
+## Basic Exploration of Data
 
 We can figure out what kind of dataset is by using the following command:
 ```{r}
@@ -46,7 +46,8 @@ I will be exploring the qualitative "continent" and the quantitative variable "l
 summary(gapminder$continent)
 summary(gapminder$lifeExp)
 ```
-Describe results.
+For the continent variable, they're 624 datapoints with Africa as a continent, 300 with the Americas, 396 with Asia, 360 with Europe, and 24 with Oceania. 
+For the life expectancy variable, the maximum value is 82.60, the minimum value is 23.60, and the median value is 60.71. 
 
 ## Plotting and various dplyr Commands
 
@@ -67,17 +68,17 @@ gapminder %>%
 The following code gives the mean life expectancy by year.
 ```{r}
 gapminder %>%
-  group_by(year) %>%
-  summarise(mean(lifeExp)) 
+  group_by(year) %>% # this line groups the data by year
+  summarise(mean(lifeExp)) # this line compute the mean life expectancy for each year
 ```
 
 As one would expect, global life expectancy continues to increase as time goes on.
 
-The following code shows the max population across all countries every 5 years between 1972 to 2007.
+The following code shows the max population across all countries for various years between 1972 to 2007.
 ```{r}
 gapminder %>%
   filter(year >= 1972) %>%
-  group_by(year) %>%
+  group_by(year) %>% # this line groups the data by year, if the year is greater than or equal to 1972
   summarise(max(pop)) 
 ```
 
@@ -88,6 +89,8 @@ gapminder %>%
   ggplot(aes(gdpPercap, lifeExp)) + geom_point()
 ```
 
+From the plot, it seems as though places with a higher GDP per capita have higher life expectancies in general.
+
 The following commands plot a boxplot, comparing the GDP per capita of the various continents (where each data point is a country) in 2007.
 ```{r}
 gapminder %>%
@@ -95,4 +98,13 @@ gapminder %>%
   ggplot(aes(continent, gdpPercap)) + geom_boxplot()
 ```
 
-As we can see from the plot, it seems like in general that Europe and Oceania have the highest GDP per capita, at least in 2007.
+As we can see from the plot, it seems as though in general that Europe and Oceania have the highest GDP per capita, at least in 2007.
+
+The following code produces a dotplot of the GDP per capita's of countries in 2007 (note that dotplot is very similar to a histogram, where each dot corresonds to a data point).
+```{r}
+gapminder %>%
+  filter(year == 2007) %>%
+  ggplot(aes(gdpPercap)) + geom_dotplot(dotsize=0.5, binwidth = 2000) # plots a dotplot with bins of size 2000
+```
+
+As we can see, most countries have GDP per capita's between 0 to 40000, with very few greater than that.
