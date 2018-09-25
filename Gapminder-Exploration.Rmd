@@ -1,6 +1,9 @@
 ---
 title: "Gapminder-Exploration"
-output: html_document
+output: 
+  html_document:
+    keep_md: yes
+    theme: cerulean
 ---
 
 ```{r setup, include=FALSE}
@@ -33,6 +36,7 @@ This gives us the types of all variables in the dataset:
 ```{r}
 str(gapminder)
 ```
+
 They're 6 variables, country, continent, year, lifeExp, pop, and gdpPercap. Their types are Factor, Factor, integer, number, interger, and number, respectively.
 
 ## Exploration of Individual Variables
@@ -66,6 +70,7 @@ gapminder %>%
   group_by(year) %>%
   summarise(mean(lifeExp)) 
 ```
+
 As one would expect, global life expectancy continues to increase as time goes on.
 
 The following code shows the max population across all countries every 5 years between 1972 to 2007.
@@ -76,7 +81,7 @@ gapminder %>%
   summarise(max(pop)) 
 ```
 
-The following commands plot GDP per capita versus life expectancy, in 1997, as a scatterplot.
+The following commands plot life expectancy versus GDP per capita, in 1997, as a scatterplot.
 ```{r}
 gapminder %>%
   filter(year == 1997) %>%
@@ -89,5 +94,5 @@ gapminder %>%
   filter(year == 2007) %>%
   ggplot(aes(continent, gdpPercap)) + geom_boxplot()
 ```
-As we can see from the plot, it seems like in general that Europe and Oceania have the highest GDP per capita, at least in 2007.
 
+As we can see from the plot, it seems like in general that Europe and Oceania have the highest GDP per capita, at least in 2007.
