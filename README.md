@@ -4,5 +4,5 @@
 
 This repository contains all files for this assignment.
 
-Here is a link to the R markdown file containing all data exploration done: []()
-The corresponding markdown file is linked here: []()
+Here is a link to the R markdown file containing all data exploration done: [](https://github.com/STAT545-UBC-students/hw02-curtis77/blob/master/Gapminder-Exploration.Rmd)
+The corresponding markdown file is linked here: [](https://github.com/STAT545-UBC-students/hw02-curtis77/blob/master/Gapminder-Exploration.md)
