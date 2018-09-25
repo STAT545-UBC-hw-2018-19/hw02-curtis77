@@ -1,0 +1,93 @@
+---
+title: "Gapminder-Exploration"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r cars}
+library(gapminder)
+library(tidyverse)
+```
+
+## Exploration of Data
+
+We can figure out what kind of dataset is by using the following command:
+```{r}
+class(gapminder)
+```
+This dataset is therefore a data frame.
+
+We extract the number of rows and columns in the dataset as follows:
+```{r}
+nrow(gapminder) # extracts number of dataset rows
+ncol(gapminder) # extracts number of dataset columns
+```
+As we can see, the number of rows is 1704 and the number of columns is 6.
+
+This gives us the types of all variables in the dataset:
+```{r}
+str(gapminder)
+```
+They're 6 variables, country, continent, year, lifeExp, pop, and gdpPercap. Their types are Factor, Factor, integer, number, interger, and number, respectively.
+
+## Exploration of Individual Variables
+
+I will be exploring the qualitative "continent" and the quantitative variable "lifeExp".
+```{r}
+summary(gapminder$continent)
+summary(gapminder$lifeExp)
+```
+Describe results.
+
+## Plotting and various dplyr Commands
+
+For the following commands, I often use the piping syntax, to improve the readability of the code.
+
+This is how we can select a column, in this case "lifeExp", from the dataset. We use the select, as follows:
+```{r}
+gapminder %>%
+  select(lifeExp)
+```
+
+This is how we can select certain rows, in this case rows where the life expectancy exceeds 40, from the dataset. We use filter, as follows:
+```{r}
+gapminder %>%
+  filter(lifeExp > 40)
+```
+
+The following code gives the mean life expectancy by year.
+```{r}
+gapminder %>%
+  group_by(year) %>%
+  summarise(mean(lifeExp)) 
+```
+As one would expect, global life expectancy continues to increase as time goes on.
+
+The following code shows the max population across all countries every 5 years between 1972 to 2007.
+```{r}
+gapminder %>%
+  filter(year >= 1972) %>%
+  group_by(year) %>%
+  summarise(max(pop)) 
+```
+
+The following commands plot GDP per capita versus life expectancy, in 1997, as a scatterplot.
+```{r}
+gapminder %>%
+  filter(year == 1997) %>%
+  ggplot(aes(gdpPercap, lifeExp)) + geom_point()
+```
+
+The following commands plot a boxplot, comparing the GDP per capita of the various continents (where each data point is a country) in 2007.
+```{r}
+gapminder %>%
+  filter(year == 2007) %>%
+  ggplot(aes(continent, gdpPercap)) + geom_boxplot()
+```
+As we can see from the plot, it seems like in general that Europe and Oceania have the highest GDP per capita, at least in 2007.
+
