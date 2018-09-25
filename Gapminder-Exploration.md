@@ -44,7 +44,7 @@ library(tidyverse)
 
 ## Basic Exploration of Data
 
-We can figure out what kind of dataset is by using the following command:
+We can figure out what kind of dataset it is by using the following command:
 
 ```r
 class(gapminder)
